@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 418293569}
   - component: {fileID: 418293568}
   - component: {fileID: 418293567}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tilemap-Collisions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ CompositeCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -6502,6 +6502,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2136658538615596935, guid: 56bf8d0ef1ee27f4797276386d304b8b, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3875610267907035634, guid: 56bf8d0ef1ee27f4797276386d304b8b, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 6424017984787628528, guid: 0f03306c667542c40bd66892154856c7, type: 3}
     - target: {fileID: 5099182284652659585, guid: 56bf8d0ef1ee27f4797276386d304b8b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
