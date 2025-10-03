@@ -38,6 +38,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        if ((health-damage) > 0)
+        {
+            health -= damage;
+            return;
+        }
+
+        // character died
+        Invoke(nameof(gameOver), 0.01f);
+    }
+
     private void FixedUpdate()
     {
         rigidBody.velocity = mInput.normalized * mSpeed; // .normalize prevents diagonal from being at 1.4 speed of cardinal directions
@@ -56,5 +68,10 @@ public class Player : MonoBehaviour
             var myCol = GetComponent<Collider2D>();
             proj.Fire(lastMoveDir, true, myCol);    // calls fire
         }
+    }
+
+    private void gameOver()
+    {
+        Destroy(gameObject);
     }
 }

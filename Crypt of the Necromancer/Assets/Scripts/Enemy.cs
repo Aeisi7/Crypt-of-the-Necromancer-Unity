@@ -14,6 +14,17 @@ public class Enemy : MonoBehaviour
         InvokeRepeating(nameof(Fire), fireFreq, fireFreq);
     }
 
+    public void TakeDamage(int damage)
+    {
+        if ((health - damage) > 0)
+        {
+            health -= damage;
+            return;
+        }
+        // character died
+        Invoke(nameof(Despawn), 0.01f);
+    }
+
     // Update is called once per frame
     private void Fire()
     {
@@ -33,5 +44,10 @@ public class Enemy : MonoBehaviour
             var myColl = GetComponent<Collider2D>();
             proj.Fire(randDir, false, myColl);
         }
+    }
+
+    private void Despawn()
+    {
+        Destroy(gameObject);
     }
 }

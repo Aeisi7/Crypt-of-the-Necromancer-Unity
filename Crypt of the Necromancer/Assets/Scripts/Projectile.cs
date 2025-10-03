@@ -7,8 +7,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [Header("Tuning")]
-    float damage = 1.0f;
-    float speed = 2.0f;
+    int damage = 1;
+    float speed = 3.0f;
     float disructTime = 10.0f; // projectile will be destroyed if no collisions within 5 secs
 
     [Header("Collision")]
@@ -33,7 +33,7 @@ public class Projectile : MonoBehaviour
         rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
-    public void setDamage(float damage)
+    public void setDamage(int damage)
     {
         this.damage = damage;
     }
@@ -73,8 +73,10 @@ public class Projectile : MonoBehaviour
         // Collides with an object of type who fired it: ignore collision
         if ((playerProj && other.CompareTag("Enemy")) || (!playerProj && other.CompareTag("Player")))
         {
-             Despawn();
-             return;
+            other.GetComponent<Player>()?.TakeDamage(damage);
+            other.GetComponent<Enemy>()?.TakeDamage(damage);
+            Despawn();
+            return;
             
         }
 
