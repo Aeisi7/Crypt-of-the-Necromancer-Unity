@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     public float mSpeed = 0.5f;   // player movement speed
     public GameObject projectilePrefab;
     public Transform firepoint;
-    public int health = 12;
+    public int maxHealth = 12;
+    public int curHealth = 12;
+    private int chestKeys = 0;
+    private bool levelKey = false;
 
     private Rigidbody2D rigidBody;
     private Vector2 mInput;     // movement input
     private Vector2 lastMoveDir = Vector2.up; // default shoot direction is up
+
+    
 
 
 
@@ -40,14 +45,27 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if ((health-damage) > 0)
+        if ((curHealth - damage) > 0)
         {
-            health -= damage;
+            curHealth -= damage;
             return;
         }
 
         // character died
         Invoke(nameof(gameOver), 0.01f);
+    }
+
+    public void GainHealth(int health)
+    {
+        // don't increase health if at max
+        if (curHealth == maxHealth) return;
+        // either increase by health, or increase to maxHealth
+        else if ((curHealth + health) < maxHealth)
+        {
+            curHealth += health;
+            return;
+        }
+        curHealth = maxHealth;
     }
 
     private void FixedUpdate()
