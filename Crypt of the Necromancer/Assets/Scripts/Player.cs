@@ -15,7 +15,11 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private int curHealth = 12;
     [SerializeField] private int chestKeys = 0;
     [SerializeField] private int projDamage = 1; // default damage
+    [SerializeField] private int maxMana = 20;
+    [SerializeField] private int curMana = 20;
+    [SerializeField] private float manaRechargeSpeed = 2.0f;
     [SerializeField] private bool levelKey = false;
+
 
     private Rigidbody2D rigidBody;
     private Vector2 mInput;     // movement input
@@ -27,6 +31,7 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>(); // initializes rigidBody on start
+        InvokeRepeating(nameof(ManaRecovery), manaRechargeSpeed, manaRechargeSpeed);
     }
 
     // Update is called once per frame
@@ -80,6 +85,12 @@ public class Player : MonoBehaviour, IDamageable
     private void Shoot()
     {
         if (projectilePrefab == null) return; // should have a projectile prefab selected
+        if (curMana == 0)  // only can fire if player has manna (1 proj = 1 mana)
+        {
+            // TODO: Add sound effect
+            return;
+        }
+        curMana--;
 
         Vector3 spawnPos = firepoint ? firepoint.position : transform.position;
         GameObject go = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
@@ -159,6 +170,27 @@ public class Player : MonoBehaviour, IDamageable
         maxHealth += healthBoost; 
         curHealth += healthBoost;
     }
+
+    // called to regain mana periodically by a start function
+    private void ManaRecovery()
+    {
+        if (curMana == maxMana) return;
+        curMana ++;
+    }
+
+    // called for picking up a mana potion
+    public void GrabManaPotion(int manaRegained)
+    {
+        //TODO: add sound affect
+        if (curMana == maxMana) return;
+        if ((curMana + manaRegained) >= maxMana)
+        {
+            curMana = maxMana;
+            return;
+        }
+        curMana+= manaRegained;
+    }
+
     private void gameOver()
     {
         Destroy(gameObject);
