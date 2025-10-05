@@ -51,7 +51,6 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-
     public void TakeDamage(int damage)
     {
         if ((curHealth - damage) > 0)
@@ -190,6 +189,20 @@ public class Player : MonoBehaviour, IDamageable
         }
         curMana+= manaRegained;
     }
+
+    /*-------------------- Getters --------------------*/
+    public int GetCurHealth() {  return curHealth; }
+
+    public int GetMaxHealth() { return maxHealth; }
+    
+    public int GetCurMana() { return curMana; }
+    
+    public int GetMaxMana() { return maxMana; }
+    
+    public int GetChestKeyCount() { return chestKeys; }
+    
+    public bool GetLevelKey() { return levelKey; }
+    /*-------------------------------------------------*/
 
     private void gameOver()
     {

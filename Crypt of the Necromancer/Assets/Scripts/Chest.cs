@@ -29,7 +29,7 @@ public class Chest : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         // Only should interact with player, and only open if player has a chest key
-        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); ;
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (player == null) return;   // is there an active player object in game
         
         // Checks if player has chest key
