@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    public float mSpeed = 0.5f;   // player movement speed
+    
     public GameObject projectilePrefab;
     public Transform firepoint;
-    public int maxHealth = 12;
-    public int curHealth = 12;
-    private int chestKeys = 0;
-    private bool levelKey = false;
+
+    // Add serializable feilds for testing
+    [Header("Testing")]
+    [SerializeField] private float mSpeed = 0.3f;   // player movement speed
+    [SerializeField] private int maxHealth = 12;
+    [SerializeField] private int curHealth = 12;
+    [SerializeField] private int chestKeys = 0;
+    [SerializeField] private int projDamage = 1; // default damage
+    [SerializeField] private bool levelKey = false;
 
     private Rigidbody2D rigidBody;
     private Vector2 mInput;     // movement input
     private Vector2 lastMoveDir = Vector2.up; // default shoot direction is up
-
-    
 
 
 
@@ -42,6 +45,7 @@ public class Player : MonoBehaviour, IDamageable
             Shoot();
         }
     }
+
 
     public void TakeDamage(int damage)
     {
@@ -81,6 +85,7 @@ public class Player : MonoBehaviour, IDamageable
         GameObject go = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
 
         var proj = go.GetComponent<Projectile>();
+        proj.damage = projDamage; // matches player upgrades
         if (proj != null)
         {
             var myCol = GetComponent<Collider2D>();
@@ -88,8 +93,73 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+
+
+    // For when player interacts with chest key object
+    public void GrabChestKey()
+    {
+        chestKeys ++;
+        //TODO: Add pickup noise
+    }
+
+    public void UseChestKey()
+    {
+        chestKeys --;
+    }
+
+    // Return true if player has a chest key
+    public bool CanOpenChest()
+    {
+        if (chestKeys == 0) return false;
+        chestKeys--;
+        return true;
+    }
+
+    // get level key
+    public void GrabLevelKey()
+    {
+        if (levelKey)
+        {
+            // TODO: add debug message shouldn't be able to get 2 level keys
+        }
+        levelKey = true; 
+        //TODO: add sound effect
+    }
+
+    // Uses level key on door
+    public bool OpenDoor()
+    {
+        if (!levelKey) 
+        {
+            //TODO: play sound effect
+            return false; 
+        }
+        else
+        {
+            //TODO: play sound effect
+            return true;
+        }
+    }
+
+    // increase movement speed
+    public void IncreaseMoveSpeed()
+    {
+        mSpeed += 0.5f;
+    }
+
+    // increase fireball damage
+    public void IncreaseDamage()
+    {
+        projDamage++;
+    }
+
+    public void IncreaseHealth()
+    {
+        maxHealth += 4; // increase a heart of health
+    }
     private void gameOver()
     {
         Destroy(gameObject);
+        // TODO: Add some function that triggers game over scene
     }
 }
