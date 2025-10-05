@@ -18,6 +18,7 @@ public class Chest : MonoBehaviour
     [SerializeField] private ChestRewards reward = ChestRewards.levelKey;   // change in unity depending on 
     [SerializeField] private int healthBoost = 4;
     [SerializeField] private int damageBoost = 1;
+    [SerializeField] private float speedBoost = 0.5f;
     
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -46,15 +47,15 @@ public class Chest : MonoBehaviour
                 break;
 
             case ChestRewards.increaseHealth:
-                player.IncreaseHealth();
+                player.IncreaseHealth(healthBoost);
                 break;
 
             case ChestRewards.IncreaseDamage:
-                player.IncreaseDamage();
+                player.IncreaseDamage(damageBoost);
                 break;
 
             case ChestRewards.IncreaseMovementSpeed:
-                player.IncreaseMoveSpeed();
+                player.IncreaseMoveSpeed(speedBoost);
                 break;
 
             default:
@@ -65,9 +66,9 @@ public class Chest : MonoBehaviour
         open = true;
         srOpenCLosed.sprite = openChest;
 
-        // set collider is trigger toggle to false
-        Collider2D collider = GetComponent<Collider2D>();
-        collider.isTrigger = false;
+        //// set collider is trigger toggle to false
+        //Collider2D collider = GetComponent<Collider2D>();
+        //collider.isTrigger = false;
 
     }
 

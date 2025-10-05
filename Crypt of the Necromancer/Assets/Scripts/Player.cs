@@ -142,20 +142,22 @@ public class Player : MonoBehaviour, IDamageable
     }
 
     // increase movement speed
-    public void IncreaseMoveSpeed()
+    public void IncreaseMoveSpeed(float speedBoost)
     {
-        mSpeed += 0.5f;
+        mSpeed += speedBoost;
     }
 
     // increase fireball damage
-    public void IncreaseDamage()
+    public void IncreaseDamage(int damageBoost)
     {
-        projDamage++;
+        projDamage += damageBoost;
     }
 
-    public void IncreaseHealth()
+    public void IncreaseHealth(int healthBoost)
     {
-        maxHealth += 4; // increase a heart of health
+        // increase a heart of health to both max and current
+        maxHealth += healthBoost; 
+        curHealth += healthBoost;
     }
     private void gameOver()
     {
