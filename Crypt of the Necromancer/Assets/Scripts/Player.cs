@@ -151,10 +151,11 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-    // increase movement speed
-    public void IncreaseMoveSpeed(float speedBoost)
+    // increase mana
+    public void IncreaseMana(int manaIncrease)
     {
-        mSpeed += speedBoost;
+        maxMana += manaIncrease;
+        curMana += manaIncrease;
     }
 
     // increase fireball damage

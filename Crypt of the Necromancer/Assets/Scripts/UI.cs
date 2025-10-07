@@ -5,16 +5,22 @@ using TMPro;
 
 public class UI : MonoBehaviour
 {
-    [Header("TextMeshPro")]
-    [SerializeField] public TextMeshProUGUI hpText;
-    [SerializeField] public TextMeshProUGUI mpText;
-    [SerializeField] public TextMeshProUGUI chestKeyText;
-    [SerializeField] public TextMeshProUGUI levelKeyText;
+    [Header("Player Stats UI")]
+    [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField] private TextMeshProUGUI mpText;
+    [SerializeField] private TextMeshProUGUI chestKeyText;
+    [SerializeField] private TextMeshProUGUI levelKeyText;
+    [Header("Sign UI")]
+    [SerializeField] private GameObject signImage;
+    [SerializeField] private TextMeshProUGUI signText;
 
     Player player;
 
     private void Start()
     {
+        // hide signImage on start
+        signImage.SetActive(false);
+
         player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<Player>();
 
         if (player == null)
@@ -40,4 +46,17 @@ public class UI : MonoBehaviour
         chestKeyText.text = $"Chest Keys: {player.GetChestKeyCount()}";
         levelKeyText.text = $"Level Key: {(player.GetLevelKey() ? "1" : "0")}";
     }
+
+    /*------------ Functions For Signs  ------------*/
+    public void ShowSign(string message)
+    {
+        signImage.SetActive(true);
+        signText.text = message;
+    }
+
+    public void HideSign()
+    {
+        signImage.SetActive(false);
+    }
+    /*----------------------------------------------*/
 }

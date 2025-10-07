@@ -12,13 +12,13 @@ public class Chest : MonoBehaviour
     [SerializeField] private SpriteRenderer srOpenCLosed;
     [SerializeField] private Sprite closedChest, openChest;     // set in unity 
 
-    public enum ChestRewards { levelKey, increaseHealth, IncreaseDamage, IncreaseMovementSpeed }
+    public enum ChestRewards { levelKey, increaseHealth, IncreaseDamage, IncreaseMana }
 
     [Header("Reward")]
     [SerializeField] private ChestRewards reward = ChestRewards.levelKey;   // change in unity depending on 
     [SerializeField] private int healthBoost = 4;
     [SerializeField] private int damageBoost = 1;
-    [SerializeField] private float speedBoost = 0.5f;
+    [SerializeField] private int manaBoost = 5;
     
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -54,8 +54,8 @@ public class Chest : MonoBehaviour
                 player.IncreaseDamage(damageBoost);
                 break;
 
-            case ChestRewards.IncreaseMovementSpeed:
-                player.IncreaseMoveSpeed(speedBoost);
+            case ChestRewards.IncreaseMana:
+                player.IncreaseMana(manaBoost);
                 break;
 
             default:
