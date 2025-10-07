@@ -164,7 +164,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0011144057, y: -0.15287845}
+  m_Offset: {x: 0.0011144057, y: -0.09389681}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -175,7 +175,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.099213764, y: 0.28087887}
+  m_Size: {x: 0.099213764, y: 0.1629156}
   m_EdgeRadius: 0
 --- !u!114 &2692477510721949365
 MonoBehaviour:
@@ -189,5 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ab15c42651e0d42ac2d56396defa1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: Test Text
+  text: Each level you will find chests that let you upgrade your maximum health
+    and mana, and increase the damage your fireball gives. Make sure to explore the
+    level throughly!
   signUI: {fileID: 0}

@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1328780047
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -99,10 +99,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3b86c153b156b4c839e1a7699f2c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSpeed: 2
   projectilePrefab: {fileID: 6424017984787628528, guid: 0f03306c667542c40bd66892154856c7, type: 3}
   firepoint: {fileID: 0}
-  health: 12
+  mSpeed: 1
+  maxHealth: 12
+  curHealth: 12
+  chestKeys: 0
+  projDamage: 1
+  maxMana: 20
+  curMana: 20
+  manaRechargeSpeed: 2
+  levelKey: 0
 --- !u!50 &1858201218294832954
 Rigidbody2D:
   serializedVersion: 4
@@ -162,7 +169,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.37087458}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -173,5 +180,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.25825083}
+  m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0

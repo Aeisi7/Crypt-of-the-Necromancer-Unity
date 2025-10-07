@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7483423224910271354}
   - component: {fileID: 8224554644964885459}
   - component: {fileID: 8407070749052191521}
+  - component: {fileID: 1033329526167433929}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Interactable
@@ -101,9 +102,10 @@ MonoBehaviour:
   srOpenCLosed: {fileID: 7483423224910271354}
   closedChest: {fileID: 21300000, guid: ebff3dfe75a534761ae901e76a7b4a17, type: 3}
   openChest: {fileID: 21300000, guid: f2ae7d277262c490a8ded2753967c6d9, type: 3}
-  reward: 3
+  reward: 1
   healthBoost: 4
   damageBoost: 1
+  manaBoost: 10
 --- !u!61 &8407070749052191521
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -136,7 +138,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.006885655}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -147,5 +149,50 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.16, y: 0.14622869}
+  m_EdgeRadius: 0
+--- !u!61 &1033329526167433929
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5770915631505629407}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.00045904517, y: 0.024566442}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.1223585, y: 0.07047135}
   m_EdgeRadius: 0
