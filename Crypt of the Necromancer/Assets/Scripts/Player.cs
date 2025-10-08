@@ -103,8 +103,6 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
-
-
     // For when player interacts with chest key object
     public void GrabChestKey()
     {
