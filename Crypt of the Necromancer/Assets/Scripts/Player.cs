@@ -20,11 +20,6 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float manaRechargeSpeed = 2.0f;
     [SerializeField] private bool levelKey = false;
 
-
-    private Rigidbody2D rigidBody;
-    private Vector2 mInput;     // movement input
-    private Vector2 lastMoveDir = Vector2.up; // default shoot direction is up
-
     [Header("Knockback")]
     [SerializeField] private float knockBackSpeed = 6f;
     [SerializeField] private float knockBackDuration = 0.25f;
@@ -38,13 +33,21 @@ public class Player : MonoBehaviour, IDamageable
     private bool invincible = false;
     private float invincibleUntil = 0f;
 
+    [Header("Damage Effects")]
+    [SerializeField] private Color flashColor = Color.red;
+    [SerializeField] private float flashSpeed = 14f; 
+
     private SpriteRenderer pSpriteRen;
+    private Rigidbody2D rigidBody;
+    private Vector2 mInput;     // movement input
+    private Vector2 lastMoveDir = Vector2.up; // default shoot direction is up
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>(); // initializes rigidBody on start
-        pSpriteRen = GetComponent<SpriteRenderer>(); 
+        pSpriteRen = GetComponent<SpriteRenderer>();
+        if (pSpriteRen == null) pSpriteRen = GetComponentInChildren<SpriteRenderer>(); // handles if a child sprite
         InvokeRepeating(nameof(ManaRecovery), manaRechargeSpeed, manaRechargeSpeed);
     }
 
@@ -64,19 +67,26 @@ public class Player : MonoBehaviour, IDamageable
                 Shoot();
         }
 
-        // match invincibilty with appearance
-        if(invincible && Time.time >= invincibleUntil)
+        // i-frames visual + timer
+        if (invincible)
         {
-            invincible = false;
-            if (pSpriteRen) pSpriteRen.color = Color.white;
-        } 
-        else if (invincible && pSpriteRen)
-        {
-            // flash red to show that they took damage and are invincible
-            pSpriteRen.color = Color.Lerp(Color.white, Color.red, 0.5f);
+            if (pSpriteRen)
+            {
+                float t = Mathf.PingPong(Time.time * flashSpeed, 1f); // 0..1..0..
+                pSpriteRen.color = Color.Lerp(Color.white, flashColor, t);
+            }
+
+            if (Time.time >= invincibleUntil)
+            {
+                invincible = false;
+                if (pSpriteRen)
+                {
+                    pSpriteRen.color = Color.white; // reset color at end
+                    pSpriteRen.enabled = true;
+                }
+            }
         }
 
-        
     }
 
     private void FixedUpdate()
@@ -123,15 +133,21 @@ public class Player : MonoBehaviour, IDamageable
             return;
         }
 
+        // Start i-frames
+        invincible = true;
+        invincibleUntil = Time.time + invincibleDuration;
+
         // after dealing damage, enter player into knockback
         if (doKnockback)
         {
+            // get knockback direction vector
             Vector2 delta = (Vector2)transform.position-hitOrgin;
             Vector2 direction = delta.normalized;
+
+            // implement knockback direction and set knockback time
             knockBackVel = direction * knockBackSpeed;
             isKnockBack = true;
             knockBackUntil = Time.time + knockBackDuration;
-
         }
     }
 
