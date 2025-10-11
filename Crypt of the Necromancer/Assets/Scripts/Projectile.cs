@@ -73,7 +73,10 @@ public class Projectile : MonoBehaviour
         // Collides with an object of type who fired it: ignore collision
         if ((playerProj && other.CompareTag("Enemy")) || (!playerProj && other.CompareTag("Player")))
         {
-            other.GetComponent<Player>()?.TakeDamage(damage);
+            // get position of projectile for kockback handeling
+            Vector2 pos = other.ClosestPoint(transform.position);
+
+            other.GetComponent<Player>()?.TakeDamage(damage, pos, true);
             other.GetComponent<Enemy>()?.TakeDamage(damage);
             Despawn();
             return;

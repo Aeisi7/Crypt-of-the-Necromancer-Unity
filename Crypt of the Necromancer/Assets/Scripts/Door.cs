@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
-    bool locked = true;
 
     // player interaction 
     private void OnTriggerEnter2D(Collider2D other)

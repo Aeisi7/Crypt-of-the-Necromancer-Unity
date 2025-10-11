@@ -110,6 +110,9 @@ MonoBehaviour:
   curMana: 20
   manaRechargeSpeed: 2
   levelKey: 0
+  knockBackSpeed: 2.5
+  knockBackDuration: 0.25
+  invincibleDuration: 0.5
 --- !u!50 &1858201218294832954
 Rigidbody2D:
   serializedVersion: 4

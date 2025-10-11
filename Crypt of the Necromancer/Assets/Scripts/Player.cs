@@ -25,42 +25,114 @@ public class Player : MonoBehaviour, IDamageable
     private Vector2 mInput;     // movement input
     private Vector2 lastMoveDir = Vector2.up; // default shoot direction is up
 
+    [Header("Knockback")]
+    [SerializeField] private float knockBackSpeed = 6f;
+    [SerializeField] private float knockBackDuration = 0.25f;
+    [SerializeField] private float invincibleDuration = 0.5f;
 
+    // knockback vars
+    private bool isKnockBack = false;
+    private Vector2 knockBackVel;
+    private float knockBackUntil = 0f; // will point of time that knockback last until (will use Time.time)
+
+    private bool invincible = false;
+    private float invincibleUntil = 0f;
+
+    private SpriteRenderer pSpriteRen;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>(); // initializes rigidBody on start
+        pSpriteRen = GetComponent<SpriteRenderer>(); 
         InvokeRepeating(nameof(ManaRecovery), manaRechargeSpeed, manaRechargeSpeed);
     }
 
     // Update is called once per frame
     void Update()
     {
-        mInput.x = Input.GetAxisRaw("Horizontal");
-        mInput.y = Input.GetAxisRaw("Vertical");
-
-        if (mInput.sqrMagnitude > 0.0001f)
+        // read input only if not in knockback
+        if (!isKnockBack)
         {
-            lastMoveDir = mInput.normalized;
+            mInput.x = Input.GetAxisRaw("Horizontal");
+            mInput.y = Input.GetAxisRaw("Vertical");
+
+            if (mInput.sqrMagnitude > 0.0001f)
+                lastMoveDir = mInput.normalized;
+
+            if (Input.GetButtonDown("Fire1"))
+                Shoot();
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        // match invincibilty with appearance
+        if(invincible && Time.time >= invincibleUntil)
         {
-            Shoot();
+            invincible = false;
+            if (pSpriteRen) pSpriteRen.color = Color.white;
+        } 
+        else if (invincible && pSpriteRen)
+        {
+            // flash red to show that they took damage and are invincible
+            pSpriteRen.color = Color.Lerp(Color.white, Color.red, 0.5f);
         }
+
+        
     }
 
+    private void FixedUpdate()
+    {
+        // check timer for knockback for invinciblity
+        if (isKnockBack && Time.time >= knockBackUntil)
+        {
+            isKnockBack = false;
+            // optional: damp to zero instantly
+            rigidBody.velocity = Vector2.zero;
+        }
+
+        if (isKnockBack)
+        {
+            rigidBody.velocity = knockBackVel;           // don't take input during knockback
+
+        }
+        else
+        {
+            rigidBody.velocity = mInput.normalized * mSpeed; // .normalize prevents diagonal from being at 1.4 speed of cardinal directions
+        }
+    }
+            
+
+    // If caller doesn't know the hit origin of object dealing damage, push opposite of lastMoveDir as a fallback
     public void TakeDamage(int damage)
     {
+        Vector2 origin = (Vector2)transform.position - lastMoveDir;
+        TakeDamage(damage, origin, true);
+    }
+
+    public void TakeDamage(int damage, Vector2 hitOrgin, bool doKnockback = true)
+    {
+        if (invincible) return; //can't take damage while invincible
+
         if ((curHealth - damage) > 0)
         {
             curHealth -= damage;
+        }
+        else
+        {
+            // character died
+            Invoke(nameof(gameOver), 0.01f);
             return;
         }
 
-        // character died
-        Invoke(nameof(gameOver), 0.01f);
+        // after dealing damage, enter player into knockback
+        if (doKnockback)
+        {
+            Vector2 delta = (Vector2)transform.position-hitOrgin;
+            Vector2 direction = delta.normalized;
+            knockBackVel = direction * knockBackSpeed;
+            isKnockBack = true;
+            knockBackUntil = Time.time + knockBackDuration;
+
+        }
     }
 
     public void GainHealth(int health)
@@ -76,10 +148,7 @@ public class Player : MonoBehaviour, IDamageable
         curHealth = maxHealth;
     }
 
-    private void FixedUpdate()
-    {
-        rigidBody.velocity = mInput.normalized * mSpeed; // .normalize prevents diagonal from being at 1.4 speed of cardinal directions
-    }
+    
 
     private void Shoot()
     {
