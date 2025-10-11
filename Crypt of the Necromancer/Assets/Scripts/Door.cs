@@ -17,6 +17,9 @@ public class Door : MonoBehaviour
 
         if (player.GetLevelKey())
         {
+            // Save current stats
+            if (GameManager.Instance) GameManager.Instance.SaveFrom(player);
+
             // TODO: Play success sound
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);   // loads next scene
 

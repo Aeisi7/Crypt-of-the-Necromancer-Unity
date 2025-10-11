@@ -113,6 +113,8 @@ MonoBehaviour:
   knockBackSpeed: 2.5
   knockBackDuration: 0.25
   invincibleDuration: 0.5
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashSpeed: 14
 --- !u!50 &1858201218294832954
 Rigidbody2D:
   serializedVersion: 4

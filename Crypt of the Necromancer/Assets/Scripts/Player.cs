@@ -2,9 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour, IDamageable
 {
-    
+
+    // used by gamemanager
+    [System.Serializable]
+    public class PlayerData
+    {
+        public float mSpeed;
+        public int maxHealth, curHealth;
+        public int chestKeys;
+        public int projDamage;
+        public int maxMana, curMana;
+        public bool levelKey;
+    }
+
     public GameObject projectilePrefab;
     public Transform firepoint;
 
@@ -41,6 +54,37 @@ public class Player : MonoBehaviour, IDamageable
     private Rigidbody2D rigidBody;
     private Vector2 mInput;     // movement input
     private Vector2 lastMoveDir = Vector2.up; // default shoot direction is up
+
+
+    // ---------- use gamemaker to handel scene transitions -----------------
+    public PlayerData ToData()
+    {
+        return new PlayerData
+        {
+            mSpeed = mSpeed,
+            maxHealth = maxHealth,
+            curHealth = curHealth,
+            chestKeys = chestKeys,
+            projDamage = projDamage,
+            maxMana = maxMana,
+            curMana = curMana,
+            levelKey = levelKey
+        };
+    }
+
+    public void FromData(PlayerData d)
+    {
+        mSpeed = d.mSpeed;
+        maxHealth = d.maxHealth;
+        curHealth = Mathf.Clamp(d.curHealth, 0, maxHealth);
+        chestKeys = Mathf.Max(0, d.chestKeys);
+        projDamage = d.projDamage;
+        maxMana = d.maxMana;
+        curMana = Mathf.Clamp(d.curMana, 0, maxMana);
+        levelKey = d.levelKey;
+    }
+
+    // ----------------------------------------------------------------------
 
     // Start is called before the first frame update
     void Start()
@@ -284,8 +328,12 @@ public class Player : MonoBehaviour, IDamageable
     public int GetMaxMana() { return maxMana; }
     
     public int GetChestKeyCount() { return chestKeys; }
-    
+
+    public int GetProjDamage() { return projDamage; }
+
     public bool GetLevelKey() { return levelKey; }
+
+    public float GetSpeed() { return mSpeed; }
     /*-------------------------------------------------*/
 
     private void gameOver()
