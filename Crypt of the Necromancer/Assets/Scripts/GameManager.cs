@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
 
     private Player.PlayerData lastSave;
     private bool hasSave;
+
+    public enum level { tutorial, level_1, level_2, level_3 }
+    [SerializeField] public int[] enemyLevlCap = { 15, 30, 45, 60 };
 
     void Awake()
     {

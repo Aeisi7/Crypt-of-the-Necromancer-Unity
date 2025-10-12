@@ -27140,6 +27140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57cfa0bec472754a90a7718bfb4ceb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLevlCap: 0f0000001e0000002d0000003c000000
 --- !u!4 &1029928757
 Transform:
   m_ObjectHideFlags: 0
