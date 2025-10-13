@@ -39,7 +39,7 @@ public class UI : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         hpText.text = $"HP: {player.GetCurHealth()}/{player.GetMaxHealth()}";
         mpText.text = $"MP: {player.GetCurMana()}/{player.GetMaxMana()}";

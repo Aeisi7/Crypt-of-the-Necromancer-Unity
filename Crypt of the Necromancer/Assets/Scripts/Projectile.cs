@@ -77,7 +77,7 @@ public class Projectile : MonoBehaviour
             Vector2 pos = other.ClosestPoint(transform.position);
 
             other.GetComponent<Player>()?.TakeDamage(damage, pos, true);
-            other.GetComponent<Enemy>()?.TakeDamage(damage);
+            other.GetComponent<EnemyBase>()?.TakeDamage(damage);
             Despawn();
             return;
             

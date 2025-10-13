@@ -1,9 +1,10 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour
 {
 
     // used by gamemanager
@@ -37,6 +38,8 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float knockBackSpeed = 6f;
     [SerializeField] private float knockBackDuration = 0.25f;
     [SerializeField] private float invincibleDuration = 0.5f;
+
+    bool isDead = false;
 
     // knockback vars
     private bool isKnockBack = false;
@@ -93,6 +96,7 @@ public class Player : MonoBehaviour, IDamageable
         pSpriteRen = GetComponent<SpriteRenderer>();
         if (pSpriteRen == null) pSpriteRen = GetComponentInChildren<SpriteRenderer>(); // handles if a child sprite
         InvokeRepeating(nameof(ManaRecovery), manaRechargeSpeed, manaRechargeSpeed);
+
     }
 
     // Update is called once per frame
@@ -104,6 +108,7 @@ public class Player : MonoBehaviour, IDamageable
             mInput.x = Input.GetAxisRaw("Horizontal");
             mInput.y = Input.GetAxisRaw("Vertical");
 
+            
             if (mInput.sqrMagnitude > 0.0001f)
                 lastMoveDir = mInput.normalized;
 
@@ -135,6 +140,12 @@ public class Player : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
+        if (isDead)
+        {
+            rigidBody.velocity = Vector2.zero;
+            return;
+        }
+
         // check timer for knockback for invinciblity
         if (isKnockBack && Time.time >= knockBackUntil)
         {
@@ -150,6 +161,7 @@ public class Player : MonoBehaviour, IDamageable
         }
         else
         {
+            
             rigidBody.velocity = mInput.normalized * mSpeed; // .normalize prevents diagonal from being at 1.4 speed of cardinal directions
         }
     }
@@ -169,9 +181,17 @@ public class Player : MonoBehaviour, IDamageable
         if ((curHealth - damage) > 0)
         {
             curHealth -= damage;
+
         }
         else
         {
+            // prevents weird UI/camera stuff on death
+            curHealth = 0;
+            rigidBody.velocity = Vector2.zero;
+            Collider2D col = GetComponent<Collider2D>();
+            col.enabled = false;
+            doKnockback = false;
+
             // character died
             Invoke(nameof(gameOver), 0.01f);
             return;
@@ -338,6 +358,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void gameOver()
     {
+        isDead = true;
         Destroy(gameObject);
         // TODO: Add some function that triggers game over scene
     }
