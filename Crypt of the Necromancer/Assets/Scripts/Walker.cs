@@ -8,12 +8,14 @@ public class Walker : EnemyBase
     [SerializeField] private int damage = 4;
     public float changeDirChance = 0.1f;
     private Vector2 currentCardinal = Vector2.zero;
+    private SpriteRenderer spriteRenderer; // for animation
 
     protected override void Awake()
     {
         base.Awake();
         // walker has highest collison damage, as its the only way it deals damge
-        colDamage = damage; 
+        colDamage = damage;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Start is called before the first frame update
@@ -30,6 +32,16 @@ public class Walker : EnemyBase
         {
             currentCardinal = RandomCardinalDir();
         }
+
+        // asset only has left walking, need to flip when moving right 
+        if (spriteRenderer) 
+        {
+            if (currentCardinal == Vector2.left)
+                spriteRenderer.flipX = false; // facing left (default)
+            else if (currentCardinal == Vector2.right)
+                spriteRenderer.flipX = true;  // facing right
+        }
+
         return currentCardinal;
     }
 

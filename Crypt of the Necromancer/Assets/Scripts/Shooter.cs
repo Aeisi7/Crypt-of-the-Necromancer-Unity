@@ -7,6 +7,7 @@ public class Shooter : EnemyBase
     [Header("Movement")]
     [SerializeField] private float changeDirChance = 0.1f;
     private Vector2 currentCardinal = Vector2.zero;
+    private SpriteRenderer spriteRenderer; // for animation
 
     [Header("Proj")]
     [SerializeField] private GameObject projectilePrefab;
@@ -27,6 +28,7 @@ public class Shooter : EnemyBase
     {
         base.Start();
         currentCardinal = RandomCardinalDir();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,15 @@ public class Shooter : EnemyBase
         if (Random.value < changeDirChance || currentCardinal == Vector2.zero)
         {
             currentCardinal = RandomCardinalDir();
+        }
+
+        // asset only has right walking, need to flip when moving left 
+        if (spriteRenderer)
+        {
+            if (currentCardinal == Vector2.right)
+                spriteRenderer.flipX = false; // facing right (default)
+            else if (currentCardinal == Vector2.left)
+                spriteRenderer.flipX = true;  // facing left
         }
 
         // Shoot at player when they enter range trigger circle2d collider
@@ -59,6 +70,9 @@ public class Shooter : EnemyBase
     // try to hit player if in range collider
     private void Shoot()
     {
+        // prevent runtime exception on player death
+        if (!player) return;
+
         Vector2 dir = (player.position - transform.position);
         float dist = dir.magnitude; // length from player
 

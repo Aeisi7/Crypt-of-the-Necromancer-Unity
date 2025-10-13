@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  speed: 4
   wallLayers:
     serializedVersion: 2
     m_Bits: 512

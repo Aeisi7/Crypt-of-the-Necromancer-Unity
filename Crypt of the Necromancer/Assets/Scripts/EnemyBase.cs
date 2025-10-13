@@ -38,7 +38,7 @@ public abstract class EnemyBase : MonoBehaviour
 
         // get player transform
         GameObject p = GameObject.FindGameObjectWithTag("Player");
-        player = p.transform;
+        if(p != null ) player = p.transform;
     }
 
     // Start is called before the first frame update

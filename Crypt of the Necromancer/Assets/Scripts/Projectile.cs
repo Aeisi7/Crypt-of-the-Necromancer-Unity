@@ -7,8 +7,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [Header("Tuning")]
-    public int damage = 1;
-    float speed = 3.0f;
+    [SerializeField] public int damage = 1;
+    [SerializeField] float speed = 3.0f;
     float disructTime = 10.0f; // projectile will be destroyed if no collisions within 5 secs
 
     [Header("Collision")]
