@@ -33,14 +33,15 @@ public class Walker : EnemyBase
             currentCardinal = RandomCardinalDir();
         }
 
-        // asset only has left walking, need to flip when moving right 
-        if (spriteRenderer) 
+        // flip horizontally by changing the object's localScale
+        if (Mathf.Abs(currentCardinal.x) > 0.001f)
         {
-            if (currentCardinal == Vector2.left)
-                spriteRenderer.flipX = false; // facing left (default)
-            else if (currentCardinal == Vector2.right)
-                spriteRenderer.flipX = true;  // facing right
+            Vector3 scale = transform.localScale;
+            float baseX = Mathf.Abs(scale.x);
+            scale.x = baseX * (currentCardinal.x > 0 ? -1f : 1f);
+            transform.localScale = scale;
         }
+
 
         return currentCardinal;
     }
