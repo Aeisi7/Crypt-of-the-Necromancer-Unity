@@ -27725,6 +27725,10 @@ PrefabInstance:
       value: Enemies will also drop mana potions to help replenish mana. Your mana
         will slowly replenish over time otherewise.
       objectReference: {fileID: 0}
+    - target: {fileID: 2692477510721949365, guid: fce0fac3c52c25a4e8fc77a03903969e, type: 3}
+      propertyPath: signUI
+      value: 
+      objectReference: {fileID: 1009694210}
     - target: {fileID: 3640124001302046588, guid: fce0fac3c52c25a4e8fc77a03903969e, type: 3}
       propertyPath: m_Name
       value: Sign
