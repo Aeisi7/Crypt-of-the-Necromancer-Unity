@@ -1,12 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 public abstract class EnemyBase : MonoBehaviour
 {
+    // --------- This will be for capping number of enemies spawned by type --------
+    // create dictionary to map the type of enemy to the count of that enemy in a scene.
+    private static readonly Dictionary<Type, int> Counts = new();
+    
+    // lambda function to track total number of enemies
+    public static int GetCountAll() => Counts.Values.Sum();
+
+    // Generic and non-generic method to get counts of subclasses
+    public static int GetCount<T>() where T : EnemyBase =>
+        Counts.TryGetValue(typeof(T), out var c) ? c : 0;
+    public static int GetCountByType(Type t) =>
+        Counts.TryGetValue(t, out var c) ? c : 0;
+
+
     [Header("Common")]
     [SerializeField] protected float moveSpeed = 1f;
     [SerializeField] protected int colDamage = 1;   // damage enemy deals when coliding with player
@@ -25,6 +40,27 @@ public abstract class EnemyBase : MonoBehaviour
     protected Transform player;        // for tracking player location
 
     private float tickAccum; // for TickMove call in FixedUpdate
+
+    // -------- Functions for tracking number  of enemies spawned ---------------
+    protected virtual void OnEnable()
+    {
+        // Get type of enemy, then increment count of that type in dictionary
+        Type t = GetType();
+        // uses conditional operator in case of first enemy to prevent key not found exception
+        Counts[t] = Counts.TryGetValue(t, out var c) ? c + 1 : 1; 
+    }
+
+    protected virtual void OnDisable()
+    {
+        Type t = GetType();
+        if (Counts.TryGetValue(t, out var c))
+        {
+            c = Mathf.Max(0, c - 1);
+            Counts[t] = c;
+        }
+    }
+    // --------------------------------------------------------------------------
+
 
     protected virtual void Awake()
     {
