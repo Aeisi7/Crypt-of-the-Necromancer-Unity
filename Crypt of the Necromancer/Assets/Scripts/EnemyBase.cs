@@ -32,6 +32,12 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected float wallCheckDistance = 0.6f;  // distance to wall where enemy reverses direction
     [SerializeField] protected float recheckInterval = 0.1f;    // how often to chekc if near wall
 
+    [Header("Drops")]       // for spawning a drop item on enemy death (same for all enemies)
+    [SerializeField] private GameObject keyPrefab;
+    [SerializeField] private GameObject healthPotionPrefab;
+    [SerializeField] private GameObject manaPotionPrefab;
+    [SerializeField] private Transform dropPoint; // usually will just be left null and defaulted to enemy position on death
+
     // Gameobject components
     protected Rigidbody2D rbdy;
     protected Collider2D col;
@@ -173,8 +179,37 @@ public abstract class EnemyBase : MonoBehaviour
         Invoke(nameof(Despawn), 0.01f);
     }
 
+    public virtual void Drop()
+    {
+        Vector2 pos = transform.position;
+        if (dropPoint)
+        {
+            pos = dropPoint.transform.position;
+        }
+
+        // roll for drop item 2/5 chance nothing drops
+        int roll = UnityEngine.Random.Range(0, 5);
+        GameObject dropPrefab = null; // default to no drop
+        switch (roll)
+        {
+            case 0:
+                dropPrefab = healthPotionPrefab;
+                break;
+            case 1:
+                dropPrefab = manaPotionPrefab;
+                break;
+            case 2:
+                dropPrefab = keyPrefab;
+                break;
+        }
+
+        if (dropPrefab) Instantiate(dropPrefab, pos, Quaternion.identity);
+
+    }
+
     protected virtual void Despawn()
     {
+        Drop();
         Destroy(gameObject);
     }
 }

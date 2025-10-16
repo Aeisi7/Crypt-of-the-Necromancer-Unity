@@ -133,4 +133,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27639439c07f7f34a9ecebacb7c787e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manaRecovered: 4
+  manaRecovered: 10

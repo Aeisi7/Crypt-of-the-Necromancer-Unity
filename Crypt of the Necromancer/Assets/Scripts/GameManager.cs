@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
     private Player.PlayerData lastSave;
     private bool hasSave;
 
-    public enum level { tutorial, level_1, level_2, level_3 }
-    [SerializeField] public int[] enemyLevlCap = { 15, 30, 45, 60 };
 
     void Awake()
     {
@@ -21,6 +19,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    // make sure all levels are ordered correctly (start -> levels -> end)
     void OnEnable() { SceneManager.sceneLoaded += OnSceneLoaded; }
     void OnDisable() { SceneManager.sceneLoaded -= OnSceneLoaded; }
 
@@ -34,9 +33,19 @@ public class GameManager : MonoBehaviour
     {
         if (!hasSave) return;   // no saved data (first scene or first playable scene after menu)
 
+        if (IsPlayableLevel(scene.name)) // won't interact with start or end screens
+        {
+            lastSave.chestKeys = 0; // don't bring old keys to new levels
+        }
+
         // find the new scene's Player and apply stats
         var player = FindObjectOfType<Player>();
         if (player != null) player.FromData(lastSave);  
+    }
+    bool IsPlayableLevel(string sceneName)
+    {
+        sceneName = sceneName.ToLowerInvariant();
+        return sceneName.ToLower().StartsWith("level") || sceneName.ToLower().Contains("tutorial");
     }
 
     // For a new run

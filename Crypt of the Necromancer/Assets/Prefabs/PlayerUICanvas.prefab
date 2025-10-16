@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7583402814445814326}
   - component: {fileID: 5912029170536673838}
   - component: {fileID: 1686967677357579459}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: MpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 2487679721203065672}
   - component: {fileID: 2807241333321953059}
   - component: {fileID: 1547644498162625980}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: SignImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 8963947537311431479}
   - component: {fileID: 9139987265533415979}
   - component: {fileID: 5451682465669179600}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 5334026120247646521}
   - component: {fileID: 3032654364337167053}
   - component: {fileID: 6379171971605879012}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: ChestKeys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 6209386546953797199}
   - component: {fileID: 2723680194236196766}
   - component: {fileID: 886366551882588462}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 3413936656454493501}
   - component: {fileID: 1751749530664490574}
   - component: {fileID: 1483546850978455522}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: LevelKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -758,7 +758,7 @@ GameObject:
   - component: {fileID: 2923977613631007912}
   - component: {fileID: 1003430392956314529}
   - component: {fileID: 5228723961114399723}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: PlayerUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -863,7 +863,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9181112161569098654}
   - component: {fileID: 4795519772957165232}
-  m_Layer: 5
+  m_Layer: 20
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -180,6 +180,10 @@ MonoBehaviour:
   health: 1
   wallCheckDistance: 0.6
   recheckInterval: 0.1
+  keyPrefab: {fileID: 7079890795705681928, guid: 5edc06a8952965743a1a3c42de6ff27a, type: 3}
+  healthPotionPrefab: {fileID: 2076892698195655897, guid: 5381c1d0bde5df74b89111423aba92ea, type: 3}
+  manaPotionPrefab: {fileID: 5295398023467657837, guid: 39852dd058aa8ac46a3cbc707a02ffae, type: 3}
+  dropPoint: {fileID: 0}
   changeDirChance: 0.1
   reverseJitterDeg: 30
 --- !u!95 &2590934667569234650

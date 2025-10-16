@@ -41,6 +41,9 @@ public class Bat : EnemyBase
         if (!hit.collider) // in case of weird physics overlap
         {
             dir = -dir; // fallback top totally reversing to be safe
+
+            // move the bat slightly to not be stuck on the wall the next frame
+            transform.position += (Vector3)(-dir * 0.03f); // move 3 frames (100ppu)
             return;
         }
 
@@ -52,7 +55,9 @@ public class Bat : EnemyBase
         dir = Rotate(reflected, jitter).normalized;
 
         // handle small numbers to avoid returning nan
-        if (dir.sqrMagnitude < 1e-6f) dir = Vector2.right;
+        if (dir.sqrMagnitude < 1e-6f) dir = reflected;
+
+        transform.position += (Vector3)(hit.normal * 0.03f); // move 3 frames (100ppu)
     }
 
     // Used to rotate a 2D vector with degrees given (used for wall collision)

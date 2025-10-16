@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
 
     private bool invincible = false;
     private float invincibleUntil = 0f;
+    private bool readingSign = false;
 
     [Header("Damage Effects")]
     [SerializeField] private Color flashColor = Color.red;
@@ -112,6 +113,8 @@ public class Player : MonoBehaviour
             if (mInput.sqrMagnitude > 0.0001f)
                 lastMoveDir = mInput.normalized;
 
+            if (readingSign) return; // don't allow player to shoot while reading sign
+            
             if (Input.GetButtonDown("Fire1"))
                 Shoot();
         }
@@ -119,6 +122,8 @@ public class Player : MonoBehaviour
         // i-frames visual + timer
         if (invincible)
         {
+            if (readingSign) return; // avoid turning off invinciblity while reading sign
+
             if (pSpriteRen)
             {
                 float t = Mathf.PingPong(Time.time * flashSpeed, 1f); // 0..1..0..
@@ -228,7 +233,6 @@ public class Player : MonoBehaviour
         curHealth = maxHealth;
     }
 
-    
 
     private void Shoot()
     {
@@ -250,6 +254,14 @@ public class Player : MonoBehaviour
             var myCol = GetComponent<Collider2D>();
             proj.Fire(lastMoveDir, true, myCol);    // calls fire
         }
+    }
+
+    // for reading signs (if more time pause game and allow exit some how instead)
+    public void SetInvincible(bool value)
+    {
+        invincible = value;
+        // set reading sign so that enemies can't hit player (stops update from overwriting)
+        readingSign = value;
     }
 
     // For when player interacts with chest key object

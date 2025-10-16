@@ -24,6 +24,11 @@ public class Projectile : MonoBehaviour
     private float ownerIgnoreTime = 0.1f; // short grace period
     private float spawnTime;
 
+    // Helped fix bug where projectile would skip past wall
+    private readonly RaycastHit2D[] hits = new RaycastHit2D[1];
+    private ContactFilter2D wallFilter;
+    private const float coll_buff = 0.02f; // add small buffer to collider
+
 
     private void Awake()
     {
@@ -31,6 +36,26 @@ public class Projectile : MonoBehaviour
         col2D = GetComponent<Collider2D>();
         rigidBody.gravityScale = 0f;
         rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        wallFilter.useLayerMask = true;
+        wallFilter.layerMask = wallLayers;
+        wallFilter.useTriggers = false;
+    }
+
+    private void FixedUpdate()
+    {
+        Vector2 rb_velocity = rigidBody.velocity;
+        // how to  
+        float dist = rb_velocity.magnitude * Time.fixedDeltaTime;
+
+        int hitCast = col2D.Cast(rb_velocity.normalized, wallFilter, hits, dist + coll_buff);
+
+        // hitcast = number of colisions in next distance + coll_buf with walls: check if collisions occurs
+        if (hitCast > 0)
+        {
+            Despawn();
+            return;
+        }
     }
 
     public void setDamage(int damage)
@@ -49,6 +74,8 @@ public class Projectile : MonoBehaviour
         }
 
         spawnTime = Time.time;
+
+        ownerCollider = owner;
         if (ownerCollider != null)
         {
             Physics2D.IgnoreCollision(col2D, ownerCollider, true);
