@@ -13,7 +13,7 @@ public class HealthPotion : MonoBehaviour
 
         Player player = other.GetComponent<Player>();
 
-        player.GainHealth(healthRecovered);
+        player.GrabHealthPotion(healthRecovered);
 
         Destroy(gameObject);
     }

@@ -39,6 +39,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float knockBackDuration = 0.25f;
     [SerializeField] private float invincibleDuration = 0.5f;
 
+
+    [Header("SoundFX")]
+    [SerializeField] private AudioClip keyPickupSound;
+    [SerializeField] private AudioClip drinkPotionSound;
+
     bool isDead = false;
 
     // knockback vars
@@ -122,8 +127,11 @@ public class Player : MonoBehaviour
         // i-frames visual + timer
         if (invincible)
         {
-            if (readingSign) return; // avoid turning off invinciblity while reading sign
-
+            if (readingSign)
+            {
+                pSpriteRen.color = Color.white;
+                return; // avoid turning off invinciblity while reading sign
+            }
             if (pSpriteRen)
             {
                 float t = Mathf.PingPong(Time.time * flashSpeed, 1f); // 0..1..0..
@@ -268,7 +276,8 @@ public class Player : MonoBehaviour
     public void GrabChestKey()
     {
         chestKeys ++;
-        //TODO: Add pickup noise
+        // pickup noise
+        SoundFXManager.Instance.PlaySoundFXClip(keyPickupSound, transform, 1f);
     }
 
     public void UseChestKey()
@@ -323,11 +332,20 @@ public class Player : MonoBehaviour
         projDamage += damageBoost;
     }
 
+    // used when opening a health bonus chest
     public void IncreaseHealth(int healthBoost)
     {
-        // increase a heart of health to both max and current
-        maxHealth += healthBoost; 
+
+        // increase a max health and current health 
+        maxHealth += healthBoost;
         curHealth += healthBoost;
+    }
+
+    public void GrabHealthPotion(int healthRecover)
+    {
+        // pickup noise
+        SoundFXManager.Instance.PlaySoundFXClip(drinkPotionSound, transform, 1f);
+        GainHealth(healthRecover);
     }
 
     // called to regain mana periodically by a start function
@@ -340,7 +358,8 @@ public class Player : MonoBehaviour
     // called for picking up a mana potion
     public void GrabManaPotion(int manaRegained)
     {
-        //TODO: add sound affect
+        // pickup noise
+        SoundFXManager.Instance.PlaySoundFXClip(drinkPotionSound, transform, 1f);
         if (curMana == maxMana) return;
         if ((curMana + manaRegained) >= maxMana)
         {

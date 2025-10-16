@@ -92,6 +92,7 @@ public class Projectile : MonoBehaviour
         // Collides with wall: destroy and exit function
         if (IsInLayerMask(other.gameObject.layer, wallLayers))
         {
+            if (other.CompareTag("Sign")) return; // prevents signs from destroying projectiles
             Despawn();
             return;
         }

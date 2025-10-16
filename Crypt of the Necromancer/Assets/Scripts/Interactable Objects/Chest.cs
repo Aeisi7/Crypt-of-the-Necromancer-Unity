@@ -19,6 +19,9 @@ public class Chest : MonoBehaviour
     [SerializeField] private int healthBoost = 4;
     [SerializeField] private int damageBoost = 1;
     [SerializeField] private int manaBoost = 5;
+
+    [Header("SoundFX")]
+    [SerializeField] private AudioClip DM_Message;
     
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -65,6 +68,10 @@ public class Chest : MonoBehaviour
         // open chest and set logic accordingly
         open = true;
         srOpenCLosed.sprite = openChest;
+
+        // Play Audio if exists
+        if(DM_Message)
+        SoundFXManager.Instance.PlaySoundFXClip(DM_Message, transform, 1f);
 
         //// set collider is trigger toggle to false
         //Collider2D collider = GetComponent<Collider2D>();
