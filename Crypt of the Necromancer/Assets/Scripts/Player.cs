@@ -43,6 +43,9 @@ public class Player : MonoBehaviour
     [Header("SoundFX")]
     [SerializeField] private AudioClip keyPickupSound;
     [SerializeField] private AudioClip drinkPotionSound;
+    [SerializeField] private AudioClip projSound;
+    [SerializeField] private AudioClip doorUnlockSound;
+    [SerializeField] private AudioClip hitSound;
 
     bool isDead = false;
 
@@ -210,6 +213,9 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // SoundFX
+        SoundFXManager.Instance.PlaySoundFXClip(hitSound, transform, 1f);
+
         // Start i-frames
         invincible = true;
         invincibleUntil = Time.time + invincibleDuration;
@@ -260,7 +266,11 @@ public class Player : MonoBehaviour
         if (proj != null)
         {
             var myCol = GetComponent<Collider2D>();
+
             proj.Fire(lastMoveDir, true, myCol);    // calls fire
+
+            // playes sound effect
+            SoundFXManager.Instance.PlaySoundFXClip(projSound, transform, 0.6f);
         }
     }
 
@@ -298,10 +308,11 @@ public class Player : MonoBehaviour
     {
         if (levelKey)
         {
-            // TODO: add debug message shouldn't be able to get 2 level keys
+            Debug.Log("Somehow got 2 level keys"); return;
+
         }
         levelKey = true; 
-        //TODO: add sound effect
+        
     }
 
     // Uses level key on door
@@ -314,7 +325,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //TODO: play sound effect
+            SoundFXManager.Instance.PlaySoundFXClip(doorUnlockSound, transform, 1f);
             return true;
         }
     }

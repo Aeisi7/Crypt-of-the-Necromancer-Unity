@@ -114,6 +114,10 @@ MonoBehaviour:
   knockBackSpeed: 2.5
   knockBackDuration: 0.25
   invincibleDuration: 0.5
+  keyPickupSound: {fileID: 8300000, guid: 229a2312a842a3b4c92d40949a91d8e8, type: 3}
+  drinkPotionSound: {fileID: 8300000, guid: 99f5c8d1115d70f498119d3d792726cf, type: 3}
+  projSound: {fileID: 8300000, guid: 824f6457466d18e4f9c769330662d30b, type: 3}
+  doorUnlockSound: {fileID: 8300000, guid: c862f0d925ffc514e9a3bb001bd78af6, type: 3}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashSpeed: 14
 --- !u!50 &1858201218294832954
