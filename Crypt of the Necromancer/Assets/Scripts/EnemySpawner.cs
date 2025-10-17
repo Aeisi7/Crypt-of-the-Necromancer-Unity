@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
         if (timer < spawnInterval) return;
         timer = 0f; // reset the timer
 
-        EnemyBase enemyComponent = enemyPrefab.GetComponent<EnemyBase>();
+        var enemyComponent = enemyPrefab.GetComponent<EnemyBase>();
 
         if (!enemyComponent)
         {
@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
         }
         Type t = enemyComponent.GetType();
 
-        if (EnemyBase.GetCountAll() >= maxPrefabEnemies) return; // don't spawn past cap
+        if (EnemyBase.GetCountByType(t) >= maxPrefabEnemies) return; // don't spawn past cap
 
         Vector3 pos = transform.position;
         Instantiate(enemyPrefab, pos, Quaternion.identity);
