@@ -117,9 +117,12 @@ public class Player : MonoBehaviour
             mInput.x = Input.GetAxisRaw("Horizontal");
             mInput.y = Input.GetAxisRaw("Vertical");
 
-            
+
             if (mInput.sqrMagnitude > 0.0001f)
+            {
                 lastMoveDir = mInput.normalized;
+                // Add walking loop function here, may need to check if currently playing a walking noise (boolean)
+            }
 
             if (readingSign) return; // don't allow player to shoot while reading sign
             
