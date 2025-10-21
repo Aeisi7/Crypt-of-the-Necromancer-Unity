@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip keyPickupSound;
     [SerializeField] private AudioClip drinkPotionSound;
     [SerializeField] private AudioClip projSound;
-    [SerializeField] private AudioClip doorUnlockSound;
+    [SerializeField] private AudioClip doorLockedSound;
     [SerializeField] private AudioClip hitSound;
 
     bool isDead = false;
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
             projDamage = projDamage,
             maxMana = maxMana,
             curMana = curMana,
-            levelKey = levelKey
+            levelKey = false // on new scene, always lose levelkey
         };
     }
 
@@ -319,18 +319,18 @@ public class Player : MonoBehaviour
     }
 
     // Uses level key on door
-    public bool OpenDoor()
+    public void OpenDoor()
     {
-        if (!levelKey) 
-        {
-            //TODO: play sound effect
-            return false; 
-        }
-        else
-        {
-            SoundFXManager.Instance.PlaySoundFXClip(doorUnlockSound, transform, 1f);
-            return true;
-        }
+        //if (!levelKey) 
+        //{
+            SoundFXManager.Instance.PlaySoundFXClip(doorLockedSound, transform, 1f);
+            //return false; 
+        //}
+        //else
+        //{
+            
+        //    return true;
+        //}
     }
 
     // increase mana

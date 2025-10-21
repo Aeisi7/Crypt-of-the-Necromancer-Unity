@@ -243,6 +243,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8224554644964885459, guid: ea1f43395bcd5c140a934536c37deaae, type: 3}
+      propertyPath: reward
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224554644964885459, guid: ea1f43395bcd5c140a934536c37deaae, type: 3}
       propertyPath: DM_Message
       value: 
       objectReference: {fileID: 8300000, guid: 007d62f896e21164b931df06e847e1e6, type: 3}
@@ -3048,6 +3052,10 @@ PrefabInstance:
     - target: {fileID: 7041646699243332493, guid: 8c7480da12fd31d4397d4db8e4ab7186, type: 3}
       propertyPath: spawnInterval
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041646699243332493, guid: 8c7480da12fd31d4397d4db8e4ab7186, type: 3}
+      propertyPath: maxPrefabEnemies
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28411,7 +28419,7 @@ PrefabInstance:
       objectReference: {fileID: 7128427088914747586, guid: ea3e15a7e568b454eac3db4b6cd3bdd0, type: 3}
     - target: {fileID: 7041646699243332493, guid: 8c7480da12fd31d4397d4db8e4ab7186, type: 3}
       propertyPath: maxPrefabEnemies
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29326,10 +29334,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3875610267907035634, guid: 56bf8d0ef1ee27f4797276386d304b8b, type: 3}
-      propertyPath: hitSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 5c92d75dc7ea5a4468aaaa11938416c5, type: 3}
     - target: {fileID: 5099182284652659585, guid: 56bf8d0ef1ee27f4797276386d304b8b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.081
@@ -29661,6 +29665,10 @@ PrefabInstance:
     - target: {fileID: 3124497836747157448, guid: 8c7480da12fd31d4397d4db8e4ab7186, type: 3}
       propertyPath: m_Name
       value: Spawner_walker
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041646699243332493, guid: 8c7480da12fd31d4397d4db8e4ab7186, type: 3}
+      propertyPath: maxPrefabEnemies
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

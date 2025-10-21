@@ -9,6 +9,7 @@ TagManager:
   - LevelExit
   - UI
   - Sign
+  - SoundFX
   layers:
   - Default
   - TransparentFX

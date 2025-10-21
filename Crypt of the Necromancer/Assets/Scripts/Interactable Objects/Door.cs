@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
+    
 
     // player interaction 
     private void OnTriggerEnter2D(Collider2D other)
@@ -20,13 +21,13 @@ public class Door : MonoBehaviour
             // Save current stats
             if (GameManager.Instance) GameManager.Instance.SaveFrom(player);
 
-            // TODO: Play success sound
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);   // loads next scene
 
         }
         else
         {
             // TODO: play fail sound
+            player.OpenDoor();
             return;
         }
     }

@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         var player = FindObjectOfType<Player>();
         if (player != null) player.FromData(lastSave);  
     }
+
     bool IsPlayableLevel(string sceneName)
     {
         sceneName = sceneName.ToLowerInvariant();

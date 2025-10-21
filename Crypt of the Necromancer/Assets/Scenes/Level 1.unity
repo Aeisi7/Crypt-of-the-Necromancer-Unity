@@ -418,7 +418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041646699243332493, guid: 8c7480da12fd31d4397d4db8e4ab7186, type: 3}
       propertyPath: maxPrefabEnemies
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16709,9 +16709,9 @@ Tilemap:
   - first: {x: 8, y: 20, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 6
-      m_TileSpriteIndex: 6
-      m_TileMatrixIndex: 1
+      m_TileIndex: 7
+      m_TileSpriteIndex: 7
+      m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -17760,9 +17760,9 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 24
+  - m_RefCount: 23
     m_Data: {fileID: 11400000, guid: 51733da9896d8634dbe9d306e115640b, type: 2}
-  - m_RefCount: 179
+  - m_RefCount: 180
     m_Data: {fileID: 11400000, guid: d2cca37b6ca0c8942b409699856da16a, type: 2}
   - m_RefCount: 139
     m_Data: {fileID: 11400000, guid: cbb8ecab101709244881da3dcd25d728, type: 2}
@@ -17779,14 +17779,14 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 24
+  - m_RefCount: 23
     m_Data: {fileID: -2119210417, guid: f15472e0666d044db9bfb88bc170ad9b, type: 3}
-  - m_RefCount: 179
+  - m_RefCount: 180
     m_Data: {fileID: -722991834, guid: f15472e0666d044db9bfb88bc170ad9b, type: 3}
   - m_RefCount: 139
     m_Data: {fileID: 582528073, guid: f15472e0666d044db9bfb88bc170ad9b, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 153
+  - m_RefCount: 154
     m_Data:
       e00: 1
       e01: 0
@@ -17804,7 +17804,7 @@ Tilemap:
       e31: 0
       e32: 0
       e33: 1
-  - m_RefCount: 15
+  - m_RefCount: 14
     m_Data:
       e00: 0
       e01: 1
@@ -17936,6 +17936,10 @@ PrefabInstance:
     - target: {fileID: 6932270555926549379, guid: ea1f43395bcd5c140a934536c37deaae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224554644964885459, guid: ea1f43395bcd5c140a934536c37deaae, type: 3}
+      propertyPath: reward
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8224554644964885459, guid: ea1f43395bcd5c140a934536c37deaae, type: 3}
       propertyPath: DM_Message
@@ -18154,7 +18158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041646699243332493, guid: 8c7480da12fd31d4397d4db8e4ab7186, type: 3}
       propertyPath: maxPrefabEnemies
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18223,7 +18227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041646699243332493, guid: 8c7480da12fd31d4397d4db8e4ab7186, type: 3}
       propertyPath: maxPrefabEnemies
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
