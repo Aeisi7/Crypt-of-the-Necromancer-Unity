@@ -102,10 +102,11 @@ MonoBehaviour:
   srOpenCLosed: {fileID: 7483423224910271354}
   closedChest: {fileID: 21300000, guid: ebff3dfe75a534761ae901e76a7b4a17, type: 3}
   openChest: {fileID: 21300000, guid: f2ae7d277262c490a8ded2753967c6d9, type: 3}
-  reward: 1
+  reward: 3
   healthBoost: 4
   damageBoost: 1
   manaBoost: 10
+  DM_Message: {fileID: 8300000, guid: 5debeed57710d834b89a363093477895, type: 3}
 --- !u!61 &8407070749052191521
 BoxCollider2D:
   m_ObjectHideFlags: 0
