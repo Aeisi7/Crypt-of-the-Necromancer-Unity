@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Player : MonoBehaviour
@@ -406,5 +407,6 @@ public class Player : MonoBehaviour
         isDead = true;
         Destroy(gameObject);
         // TODO: Add some function that triggers game over scene
+        SceneManager.LoadScene("GameOverMenu");
     }
 }
