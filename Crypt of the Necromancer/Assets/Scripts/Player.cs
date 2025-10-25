@@ -48,8 +48,6 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip doorLockedSound;
     [SerializeField] private AudioClip hitSound;
 
-    bool isDead = false;
-
     // knockback vars
     private bool isKnockBack = false;
     private Vector2 knockBackVel;
@@ -68,8 +66,12 @@ public class Player : MonoBehaviour
     private Vector2 mInput;     // movement input
     private Vector2 lastMoveDir = Vector2.up; // default shoot direction is up
 
+    Animator animator;
+
 
     // ---------- use gamemaker to handel scene transitions -----------------
+    
+    // Saves current state of stats/data before entering new scene
     public PlayerData ToData()
     {
         return new PlayerData
@@ -85,6 +87,7 @@ public class Player : MonoBehaviour
         };
     }
 
+    // loads player stats/data from last scene
     public void FromData(PlayerData d)
     {
         mSpeed = d.mSpeed;
@@ -105,8 +108,9 @@ public class Player : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>(); // initializes rigidBody on start
         pSpriteRen = GetComponent<SpriteRenderer>();
         if (pSpriteRen == null) pSpriteRen = GetComponentInChildren<SpriteRenderer>(); // handles if a child sprite
-        InvokeRepeating(nameof(ManaRecovery), manaRechargeSpeed, manaRechargeSpeed);
-
+        InvokeRepeating(nameof(ManaRecovery), manaRechargeSpeed, manaRechargeSpeed); 
+        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -118,12 +122,14 @@ public class Player : MonoBehaviour
             mInput.x = Input.GetAxisRaw("Horizontal");
             mInput.y = Input.GetAxisRaw("Vertical");
 
-
+            // normalizes movement to handel diagonal directions
             if (mInput.sqrMagnitude > 0.0001f)
             {
-                lastMoveDir = mInput.normalized;
-                // Add walking loop function here, may need to check if currently playing a walking noise (boolean)
+                lastMoveDir = mInput.normalized; 
             }
+
+            // Moving checks if you should play idle or moving animation (called PlayerDown when I was considering multiple move
+            animator.SetFloat("Moving", mInput.sqrMagnitude);
 
             if (readingSign) return; // don't allow player to shoot while reading sign
             
@@ -145,6 +151,7 @@ public class Player : MonoBehaviour
                 pSpriteRen.color = Color.Lerp(Color.white, flashColor, t);
             }
 
+            // invincibilty time has passed, set to be vulnerable again, and stop flashing effect
             if (Time.time >= invincibleUntil)
             {
                 invincible = false;
@@ -160,12 +167,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDead)
-        {
-            rigidBody.velocity = Vector2.zero;
-            return;
-        }
-
         // check timer for knockback for invinciblity
         if (isKnockBack && Time.time >= knockBackUntil)
         {
@@ -177,11 +178,9 @@ public class Player : MonoBehaviour
         if (isKnockBack)
         {
             rigidBody.velocity = knockBackVel;           // don't take input during knockback
-
         }
         else
         {
-            
             rigidBody.velocity = mInput.normalized * mSpeed; // .normalize prevents diagonal from being at 1.4 speed of cardinal directions
         }
     }
@@ -198,20 +197,13 @@ public class Player : MonoBehaviour
     {
         if (invincible) return; //can't take damage while invincible
 
+        // decrement health if damage doesn't kill player
         if ((curHealth - damage) > 0)
         {
             curHealth -= damage;
-
         }
         else
         {
-            // prevents weird UI/camera stuff on death
-            curHealth = 0;
-            rigidBody.velocity = Vector2.zero;
-            Collider2D col = GetComponent<Collider2D>();
-            col.enabled = false;
-            doKnockback = false;
-
             // character died
             Invoke(nameof(gameOver), 0.01f);
             return;
@@ -251,13 +243,12 @@ public class Player : MonoBehaviour
         curHealth = maxHealth;
     }
 
-
+    // Handels projectile shooting logic for player
     private void Shoot()
     {
         if (projectilePrefab == null) return; // should have a projectile prefab selected
         if (curMana == 0)  // only can fire if player has manna (1 proj = 1 mana)
         {
-            // TODO: Add sound effect
             return;
         }
         curMana--;
@@ -294,6 +285,7 @@ public class Player : MonoBehaviour
         SoundFXManager.Instance.PlaySoundFXClip(keyPickupSound, transform, 1f);
     }
 
+    // decrements chest key count on key use
     public void UseChestKey()
     {
         chestKeys --;
@@ -319,19 +311,10 @@ public class Player : MonoBehaviour
         
     }
 
-    // Uses level key on door
+    // planned to do more, but realised only needed this for playing a failed door open soundFX (used in door script)
     public void OpenDoor()
     {
-        //if (!levelKey) 
-        //{
-            SoundFXManager.Instance.PlaySoundFXClip(doorLockedSound, transform, 1f);
-            //return false; 
-        //}
-        //else
-        //{
-            
-        //    return true;
-        //}
+        SoundFXManager.Instance.PlaySoundFXClip(doorLockedSound, transform, 1f);
     }
 
     // increase mana
@@ -375,7 +358,9 @@ public class Player : MonoBehaviour
     {
         // pickup noise
         SoundFXManager.Instance.PlaySoundFXClip(drinkPotionSound, transform, 1f);
-        if (curMana == maxMana) return;
+        if (curMana == maxMana) return; // max mana already
+
+        // if manaRegaianed would put player above max, just set curMana to max, otherwise add it to curmana
         if ((curMana + manaRegained) >= maxMana)
         {
             curMana = maxMana;
@@ -404,7 +389,6 @@ public class Player : MonoBehaviour
 
     private void gameOver()
     {
-        isDead = true;
         Destroy(gameObject);
         // TODO: Add some function that triggers game over scene
         SceneManager.LoadScene("GameOverMenu");

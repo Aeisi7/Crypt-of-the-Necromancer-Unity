@@ -18,10 +18,6 @@ public class Shooter : EnemyBase
 
     private float nextShootTime;    // used with cooldown
 
-    //protected override void Awake()
-    //{
-    //    base.Awake();
-    //}
 
     // Start is called before the first frame update
     protected override void Start()
@@ -31,7 +27,7 @@ public class Shooter : EnemyBase
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
+    // Gets random cardinal direction 
     protected override Vector2 GetDirection()
     {
         // random walking (same as walker)
@@ -55,16 +51,30 @@ public class Shooter : EnemyBase
         return currentCardinal;
     }
 
+    // Handels how walker deals with running into walls
     protected override void OnBlocked()
     {
-        Vector2 reverse = -currentCardinal;
-        // check if reverse direction also is blocked (narrow hallway or sign/chest next to wall)
-        bool blockedOpposite = Physics2D.Raycast(transform.position, reverse, wallCheckDistance, wallLayers);
-        if (blockedOpposite)
+        Vector2 origin = col.bounds.center; // gets center of walker's collider for refernce
+
+        // Try to get the wall blocking us and nudge off it
+        RaycastHit2D hit = Physics2D.Raycast(origin, currentCardinal, wallCheckDistance, wallLayers);
+        if (hit.collider)
         {
-            currentCardinal = RandomCardinalDir();
+            transform.position += (Vector3)(hit.normal * 0.03f); // nudge off wall
         }
-        currentCardinal = reverse;
+        else
+        {
+            // nudge backwards if we didn't catch a collider with raycast/already inside collider
+            transform.position += (Vector3)(-currentCardinal * 0.03f);
+        }
+
+        // Reverse direction, or pick a new one if the opposite is also blocked (narrow hallway)
+        Vector2 reverse = -currentCardinal;
+        bool blockedOpposite = Physics2D.Raycast(origin, reverse, wallCheckDistance, wallLayers);
+        currentCardinal = blockedOpposite ? RandomCardinalDir() : reverse;
+
+        // Safety: ensure we have a direction
+        if (currentCardinal == Vector2.zero) currentCardinal = RandomCardinalDir();
     }
 
     // try to hit player if in range collider

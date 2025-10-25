@@ -56,6 +56,7 @@ public abstract class EnemyBase : MonoBehaviour
         Counts[t] = Counts.TryGetValue(t, out var c) ? c + 1 : 1; 
     }
 
+    // on death, lowers count of enemy type (useful for spawners)
     protected virtual void OnDisable()
     {
         Type t = GetType();

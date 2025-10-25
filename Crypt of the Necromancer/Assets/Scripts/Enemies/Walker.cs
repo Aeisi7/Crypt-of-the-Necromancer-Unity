@@ -25,6 +25,7 @@ public class Walker : EnemyBase
         currentCardinal = RandomCardinalDir();
     }
 
+    // Gets random cardinal direction 
     protected override Vector2 GetDirection()
     {
         // handels both change scenarios (movement stopped or 
@@ -46,14 +47,30 @@ public class Walker : EnemyBase
         return currentCardinal;
     }
 
+    // Handels how walker deals with running into walls
     protected override void OnBlocked()
     {
-        // Try the opposite first
-        Vector2 reverse = -currentCardinal;
+        Vector2 origin = col.bounds.center; // gets center of walker's collider for refernce
 
-        // If opposite direction also blocked, pick a new random valid one
-        bool blockedOpposite = Physics2D.Raycast(transform.position, reverse, wallCheckDistance, wallLayers);
+        // Try to get the wall blocking us and nudge off it
+        RaycastHit2D hit = Physics2D.Raycast(origin, currentCardinal, wallCheckDistance, wallLayers);
+        if (hit.collider)
+        {
+            transform.position += (Vector3)(hit.normal * 0.03f); // nudge off wall
+        }
+        else
+        {
+            // nudge backwards if we didn't catch a collider with raycast/already inside collider
+            transform.position += (Vector3)(-currentCardinal * 0.03f);
+        }
+
+        // Reverse direction, or pick a new one if the opposite is also blocked (narrow hallway)
+        Vector2 reverse = -currentCardinal;
+        bool blockedOpposite = Physics2D.Raycast(origin, reverse, wallCheckDistance, wallLayers);
         currentCardinal = blockedOpposite ? RandomCardinalDir() : reverse;
+
+        // Safety: ensure we have a direction
+        if (currentCardinal == Vector2.zero) currentCardinal = RandomCardinalDir();
     }
 
 }

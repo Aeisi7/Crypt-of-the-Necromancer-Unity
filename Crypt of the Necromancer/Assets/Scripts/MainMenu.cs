@@ -8,14 +8,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    // for play game, retry, and replay game buttons in menus
     public void PlayGame()
     {
         ClearStats();
 
         SceneManager.LoadScene("Tutorial-Test"); // SceneManager.GetActiveScene().buildIndex + 1
-        
     }
 
+    // For buttons that exit game (works in both unity editor and in app
     public void QuitGame()
     {
         ClearStats();
@@ -29,7 +30,7 @@ public class MainMenu : MonoBehaviour
         #endif
     }
 
-    // On game restart/replay, stats will be set to default value
+    // On game restart/replay, stats will be set to default value (if on screen where player is not existing)
     private void ClearStats()
     {
         if (GameManager.Instance != null)

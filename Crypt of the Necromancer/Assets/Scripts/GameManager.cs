@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private Player.PlayerData lastSave;
     private bool hasSave;
 
-
+    // sets up instance
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -43,13 +43,14 @@ public class GameManager : MonoBehaviour
         if (player != null) player.FromData(lastSave);  
     }
 
+    // checks if scene is playable level
     bool IsPlayableLevel(string sceneName)
     {
         sceneName = sceneName.ToLowerInvariant();
         return sceneName.ToLower().StartsWith("level") || sceneName.ToLower().Contains("tutorial");
     }
 
-    // For a new run
+    // For a new run, will clear saved data (prevents keeping data in replay/retry)
     public void ClearSave() { hasSave = false; lastSave = null; }
 
 }

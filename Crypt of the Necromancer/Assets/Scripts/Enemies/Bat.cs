@@ -19,6 +19,7 @@ public class Bat : EnemyBase
         if (dir == Vector2.zero) dir = Vector2.right;
     }
 
+    // gets random direction (in any 2d direction)
     protected override Vector2 GetDirection()
     {
         if (Random.value < changeDirChance || dir == Vector2.zero)
@@ -33,6 +34,7 @@ public class Bat : EnemyBase
         return dir;
     }
 
+    // What happens if flying in direction of wall
     protected override void OnBlocked()
     {
         // Cast to detect wall and get its normal (will allow reflection 20 degrees in each direction from normal)
