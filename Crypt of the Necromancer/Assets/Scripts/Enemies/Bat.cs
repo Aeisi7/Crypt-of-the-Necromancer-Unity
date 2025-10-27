@@ -37,8 +37,9 @@ public class Bat : EnemyBase
     // What happens if flying in direction of wall
     protected override void OnBlocked()
     {
-        // Cast to detect wall and get its normal (will allow reflection 20 degrees in each direction from normal)
-        Vector2 origin = col.bounds.center; // get origin of bat
+        Vector2 origin = col.bounds.center; // get origin/center point of bat collider
+
+        // Raycast to wall so bat can avoid getting stuck in it 
         RaycastHit2D hit = Physics2D.Raycast(origin, dir, wallCheckDistance, wallLayers);
         if (!hit.collider) // in case of weird physics overlap
         {
@@ -52,7 +53,7 @@ public class Bat : EnemyBase
         // Perfect mirror reflection relative to wall normal
         Vector2 reflected = Vector2.Reflect(dir, hit.normal).normalized;
 
-        // Apply jitter *around the reflection angle*
+        // Apply jitter (allows bats to bounce of wall within a range of jitter degrees in each direction)
         float jitter = Random.Range(-reverseJitterDeg, reverseJitterDeg);
         dir = Rotate(reflected, jitter).normalized;
 
