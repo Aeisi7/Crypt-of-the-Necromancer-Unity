@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
                 pSpriteRen.color = Color.white;
                 return; // avoid turning off invinciblity while reading sign
             }
-            if (pSpriteRen)
+            else if (pSpriteRen)
             {
                 float t = Mathf.PingPong(Time.time * flashSpeed, 1f); // 0..1..0..
                 pSpriteRen.color = Color.Lerp(Color.white, flashColor, t);
